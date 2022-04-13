@@ -1,14 +1,12 @@
 package com.example.kelasasqlite.database;
 
 public class Teman {
-    //Menampilkan data
     String id;
     String nama;
     String telpon;
 
-    //Buat Kontruktor
+    public Teman(){
 
-    public Teman() {
     }
 
     public Teman(String id, String nama, String telpon) {

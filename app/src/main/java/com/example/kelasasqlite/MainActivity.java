@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private TemanAdapter adapter;
     private ArrayList<Teman> temanArrayList;
     DBController controller = new DBController(this);
-    String id,nm,tlp;
+    String id, nm, tlp;
     private FloatingActionButton fab;
 
     @Override
@@ -31,34 +31,33 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
         fab = findViewById(R.id.floatingBtn);
-        //Membaca data
+
         BacaData();
         adapter = new TemanAdapter(temanArrayList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-        fab.setOnClickListener(new View.OnClickListener() {
+
+        fab.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view) {
+            public void onClick(View v){
                 Intent intent = new Intent(MainActivity.this,TemanBaru.class);
                 startActivity(intent);
             }
         });
     }
-
     public void BacaData(){
         ArrayList<HashMap<String,String>> daftarTeman = controller.getAllTeman();
         temanArrayList = new ArrayList<>();
-        //Memindah dari hasil query kedalam Teman.java
-        //Untuk membaca indexs memakai for
-        for(int i =0;i <daftarTeman.size();i++);{
-            //membuat objek
-            Teman teman  = new Teman();
-
+        //memindah dari hasil query kedalam teman
+        for (int i=0; i<daftarTeman.size(); i++){
+            Teman teman = new Teman();
             teman.setId(daftarTeman.get(i).get("id").toString());
             teman.setNama(daftarTeman.get(i).get("nama").toString());
             teman.setTelpon(daftarTeman.get(i).get("telpon").toString());
-            //Pindahkan dari Teman.java kedalam arrayList teman di adapter
+            //pindahkan dari teman kedalam ArrayList teman di adapter
             temanArrayList.add(teman);
         }
+
     }
 }

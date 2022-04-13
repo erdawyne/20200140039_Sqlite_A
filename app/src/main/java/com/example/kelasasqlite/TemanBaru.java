@@ -14,41 +14,44 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.HashMap;
 
 public class TemanBaru extends AppCompatActivity {
-    private TextInputEditText tNama,tTelpon;
+    private TextInputEditText tNama, tTelpon;
     private Button simpanBtn;
-    String nm,tlp;
+    String nm, tlp;
     DBController controller = new DBController(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teman_baru);
+
         tNama = (TextInputEditText) findViewById(R.id.tietNama);
         tTelpon = (TextInputEditText) findViewById(R.id.tietTelpon);
         simpanBtn = (Button) findViewById(R.id.buttonSave);
 
-        simpanBtn.setOnClickListener(new View.OnClickListener() {
+        simpanBtn.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view) {
-                if(tNama.getText().equals("") ||tTelpon.getText().toString().equals("")){
-                    Toast.makeText(getApplicationContext(),"Data Belum Lengkap !!!",Toast.LENGTH_SHORT).show();
-                }else {
+            public void onClick(View v){
+                if(tNama.getText().toString().equals("")||tTelpon.getText().equals("")){
+                    Toast.makeText(getApplicationContext(), "Data is not completed!", Toast.LENGTH_SHORT).show();
+                }
+                else{
                     nm = tNama.getText().toString();
                     tlp = tTelpon.getText().toString();
+
                     HashMap<String,String> qvalues = new HashMap<>();
                     qvalues.put("nama",nm);
                     qvalues.put("telpon",tlp);
 
                     controller.insertData(qvalues);
                     callHome();
+
                 }
             }
         });
 
     }
-    //Membuat sebuah method untuk memanggil act
     public void callHome(){
-        Intent intent = new Intent(TemanBaru.this,MainActivity.class);
+        Intent intent = new Intent(TemanBaru.this, MainActivity.class);
         startActivity(intent);
         finish();
     }
